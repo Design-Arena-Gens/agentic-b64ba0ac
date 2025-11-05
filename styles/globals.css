@@ -1,0 +1,157 @@
+:root{
+  --page-width: 6in; /* book page size */
+  --page-height: 9in;
+  --safe: 0.125in; /* safe zone */
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: #0f172a; /* slate-900 */
+  color: #0b1020;
+}
+
+* { box-sizing: border-box; }
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: radial-gradient(1200px 600px at 20% 10%, #1e293b 0%, #0f172a 50%, #0b1020 100%);
+}
+
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+}
+
+button {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(249, 115, 22, 0.35);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.book-page {
+  width: calc(var(--page-width) / 1.5);
+  height: calc(var(--page-height) / 1.5);
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(2, 6, 23, 0.06);
+}
+
+.page-art {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(800px 400px at 100% 0%, rgba(254, 215, 170, 0.35), transparent),
+              radial-gradient(600px 600px at -10% 120%, rgba(191, 219, 254, 0.35), transparent);
+  pointer-events: none;
+}
+
+.page-inner {
+  position: absolute;
+  inset: var(--safe);
+  display: flex;
+  flex-direction: column;
+  padding: 12pt;
+  gap: 8pt;
+}
+
+.page-title {
+  font-size: 18pt;
+  font-weight: 800;
+  color: #1f2937;
+}
+
+.page-text {
+  font-size: 15pt; /* as requested */
+  line-height: 1.45;
+  color: #111827;
+}
+
+.page-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #475569;
+  font-size: 10pt;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(99, 102, 241, 0.08);
+  color: #4338ca;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  font-weight: 700;
+}
+
+.illus {
+  position: absolute;
+  right: 10pt;
+  bottom: 18pt;
+  width: 120pt;
+  height: 90pt;
+  opacity: 0.9;
+}
+
+.safeline {
+  position: absolute;
+  inset: var(--safe);
+  border: 1px dashed rgba(2, 6, 23, 0.15);
+  pointer-events: none;
+}
+
+.header {
+  text-align: center;
+  color: #e5e7eb;
+}
+
+@media print {
+  .controls, .header { display: none !important; }
+  .container { background: white; padding: 0; }
+  .grid { display: block; }
+  .book-page {
+    break-after: page;
+    width: var(--page-width) !important;
+    height: var(--page-height) !important;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+@page {
+  size: 6in 9in;
+  margin: 0; /* we manage safe-zone ourselves */
+}
